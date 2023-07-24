@@ -9,7 +9,6 @@ export const checkRegisterMiddleware = (req,res,next) =>{
         if(!email) return res.send("Email is required.");
         if(!password) return res.send("Password field is empty.");
         if(!confirmPassword) return res.send("Password field is empty");
-
         if(password !== confirmPassword){
             return res.send("Passwords do not match.");
         }
@@ -34,7 +33,8 @@ export const checkLoginMiddleware = async(req,res,next) =>{
 
         const findUser = await User.findOne({email}).exec();
         if(!findUser) return res.status(400).json({status : 400, message : "User not found."});
-        const decryptPass = decPass(password, email);
+        const decryptPass =await decPass(password, email);
+        console.log(decryptPass, "decPass");
         if(decryptPass){
             next();
         }else{

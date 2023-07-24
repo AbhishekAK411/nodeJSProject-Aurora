@@ -16,7 +16,7 @@ export const encPass = async(password) => {
 export const decPass = async(password, email) =>{
     try {
         const findUser = await User.findOne({email}).exec();
-        const decryptCheck = bcrypt.compare(password, findUser.password);
+        const decryptCheck =await bcrypt.compare(password, findUser.password);
         if(decryptCheck){
             return true;
         }else{

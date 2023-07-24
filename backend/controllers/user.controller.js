@@ -49,8 +49,20 @@ export const renderLogin = (req,res) =>{
 
 export const login = async(req,res) =>{
     try {
-        return res.status(200).json({success : 200, message : "Login successful."});
+        const userData = req.body;
+        const userDataJSON = JSON.stringify(userData);
+        fs.writeFileSync(__dirname + '/public/JSON/currentUser.json', userDataJSON);
+        res.redirect('/aurora/home');
+        // return res.status(200).json({success : 200, message : "Login successful."});
     } catch (error) {
         return res.send(error);
+    }
+}
+
+export const renderHome = async(req,res) =>{
+    try{
+        return res.sendFile(__dirname + "/public/HTML/home.html");
+    }catch(err){
+        return res.send(err);
     }
 }
